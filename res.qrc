@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>img/kuaijiejian.svg</file>
+        <file>img/shezhi.svg</file>
+        <file>img/timer.svg</file>
+        <file>img/xianshiqi.svg</file>
+        <file>img/progress_handel.svg</file>
+    </qresource>
+</RCC>
