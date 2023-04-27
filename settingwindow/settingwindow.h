@@ -2,7 +2,7 @@
 #define SETTINGWINDOW_H
 
 #include <QWidget>
-
+#include "component/BaseWindow.h"
 namespace Ui {
 class SettingWindow;
 }
@@ -14,9 +14,13 @@ class SettingWindow : public QWidget
 public:
     explicit SettingWindow(QWidget *parent = nullptr);
     ~SettingWindow();
+    void resizeEvent(QResizeEvent *event);
 
+    void resizeBlock();
 private:
     Ui::SettingWindow *ui;
+
+    void initMenu();
 };
 
 #endif // SETTINGWINDOW_H

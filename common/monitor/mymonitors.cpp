@@ -5,6 +5,7 @@
 #include <PhysicalMonitorEnumerationAPI.h>
 #include "winuser.h"
 #include "mymonitors.h"
+#include "MonitorController.h"
 
 //获取所有的显示器
 QList<HMONITOR> MyMonitors::getHMonitors() {
@@ -16,8 +17,8 @@ QList<HMONITOR> MyMonitors::getHMonitors() {
         return TRUE;
     };
     EnumDisplayMonitors(nullptr, nullptr, monitorEnumProc, reinterpret_cast<LPARAM>(&monitors));
-    for (auto & monitor : monitors) {
-        qDebug()<<"发现显示器:" << monitor;
+    for (auto &monitor: monitors) {
+        qDebug() << "发现显示器:" << monitor;
     }
     return monitors;
 }
@@ -25,14 +26,9 @@ QList<HMONITOR> MyMonitors::getHMonitors() {
 QList<Monitor> MyMonitors::getMonitors() {
     QList<Monitor> monitors;
     //获取所有的Hmonitor
-    auto monitorEnumProc = [](HMONITOR hMonitor, HDC hdcMonitor, LPRECT lprcMonitor, LPARAM dwData) -> BOOL {
-        auto monitors = reinterpret_cast<QList<struct Monitor> *>(dwData);
-        monitors->push_back({hMonitor, {}});
-        return TRUE;
-    };
-    EnumDisplayMonitors(nullptr, nullptr, monitorEnumProc, reinterpret_cast<LPARAM>(&monitors));
-    for (auto &monitor: monitors) {
-        qDebug() << monitor.hmonitor;
+    QList<HMONITOR> hs = getHMonitors();
+    for (int i = 0; i < hs.size(); ++i) {
+        monitors.push_back({hs[i], {}});
     }
     //获取Monitor对应的PhyliciaHandel
     for (auto &monitor: monitors) {
@@ -107,5 +103,39 @@ QList<Monitor> MyMonitors::getMonitors() {
     return monitors;
 }
 
+QHash<HMONITOR, Monitor> MyMonitors::getMonitorMap() {
+    QList<Monitor> l = getMonitors();
+    QHash<HMONITOR, Monitor> map;
+    for (auto monitor: l) {
+        map.insert(monitor.hmonitor, monitor);
+    }
+    return map;
+}
+
 MyMonitors::MyMonitors() = default;
 
+MonitorInfoA MyMonitors::getMonitorsInfoA(HMONITOR hmonitor) {
+    MonitorInfoA monitorInfos;
+    MonitorBrightness monitorBrightness;
+    QHash<HMONITOR, Monitor> hMap = getMonitorMap();
+    MonitorController::getBrightness(hmonitor, monitorBrightness);
+    Monitor monitor = hMap.value(hmonitor);
+    monitorInfos.displayDevice = monitor.displayDevice;
+    monitorInfos.monitorBrightness = monitorBrightness;
+    qDebug() << "获取显示器信息:" << hmonitor;
+    qDebug() << "显示器名称：" << monitorInfos.displayDevice.DeviceName;
+    qDebug() << "显示器ID：" << monitorInfos.displayDevice.DeviceID;
+    qDebug() << "显示器描述：" << monitorInfos.displayDevice.DeviceString;
+    qDebug() << "显示器key：" << monitorInfos.displayDevice.DeviceKey;
+    qDebug() << "显示器当前亮度：" << monitorInfos.monitorBrightness.currentBrightness;
+    qDebug() << "显示器最大亮度：" << monitorInfos.monitorBrightness.maximumBrightness;
+    return monitorInfos;
+}
+
+QMap<QString, QScreen*> MyMonitors:: getScreenNameMap() {
+    QMap<QString, QScreen *> map;
+    for (const auto item: QGuiApplication::screens()) {
+        map.insert(item->name(), item);
+    }
+    return map;
+}

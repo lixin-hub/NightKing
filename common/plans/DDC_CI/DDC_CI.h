@@ -19,9 +19,9 @@ public:
 
     static bool setBrightness(HMONITOR hMonitor, DWORD dw);
 
-    [[maybe_unused]] static bool getMonitorContrast(HANDLE hMonitor, MonitorContrast *monitorContrast);
+    [[maybe_unused]] static bool getMonitorContrast(HANDLE hMonitor, MonitorContrast &monitorContrast);
 
-    static bool getMonitorBrightness(HMONITOR hMonitor, MonitorBrightness *brightness);
+    static bool getMonitorBrightness(HMONITOR hMonitor, MonitorBrightness &brightness);
 
 };
 

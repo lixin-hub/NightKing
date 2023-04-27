@@ -16,10 +16,10 @@
 #define _WIN32_DCOM
 class WMI {
 public:
-    static bool setBrightness(int bValue);
-    static bool getBrightness(MonitorBrightness &monitorBrightness);
+static bool setBrightness(int bValue);
+static bool getBrightness(MonitorBrightness &monitorBrightness);
 
-    ~WMI();
+~WMI();
 };
 
 #endif //NIGHTKING_WMI_H

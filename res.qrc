@@ -5,5 +5,10 @@
         <file>img/timer.svg</file>
         <file>img/xianshiqi.svg</file>
         <file>img/progress_handel.svg</file>
+        <file>img/jiantou_xiangshang.svg</file>
+        <file>img/jiantou_xiangxia.svg</file>
+        <file>img/zhuti.svg</file>
+        <file>img/duoyuyan.svg</file>
+        <file>img/gengxin.svg</file>
     </qresource>
 </RCC>

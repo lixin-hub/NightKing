@@ -9,33 +9,58 @@
 #include "common/plans/Gamma/CGammaRamp.h"
 #include "common/plans/IOCTL/Ioctl.h"
 
-bool MonitorController::getBrightness(HMONITOR hmonitor, int &value) {
-    auto *monitorBrightness = (MonitorBrightness *) malloc(sizeof(MonitorBrightness));
-    bool isSuccess = DDC_CI::getMonitorBrightness(hmonitor, monitorBrightness);
+static QHash<HMONITOR, TransparentWindow *> transWindowMap;
+
+bool MonitorController::getBrightness(HMONITOR hmonitor, MonitorBrightness &monitorBrightness) {
+    MonitorBrightness *brightness = (MonitorBrightness *) malloc(sizeof(MonitorBrightness));
+    bool isSuccess = DDC_CI::getMonitorBrightness(hmonitor, *brightness);
     if (isSuccess) {
-        value =(int) monitorBrightness->currentBrightness;
+        monitorBrightness = *brightness;
         return true;
     }
-    return WMI::getBrightness(&value);
+    return WMI::getBrightness(monitorBrightness);
 }
 
-bool MonitorController::setBrightness(const QList<HMONITOR>& hMonitors, int index, int value, bool useGama) {
-    if (DDC_CI::setBrightness(hMonitors.at(index), value)) {
-        qDebug() << "使用DDC/CI";
-        return true;
-    } else if (WMI::setBrightness(value)) {
-        qDebug() << "使用WMI";
-        return true;
-    } else if (Ioctl::setBrightness(value)) {
-        qDebug() << "使用Ioctl";
-        return true;
-    }
-    if (useGama) {
-        CGammaRamp cGammaRamp;
-        if (cGammaRamp.SetBrightness(nullptr, value)) {
-            qDebug() << "使用CGamaRamp";
+bool MonitorController::setBrightness(const QList<HMONITOR> &hMonitors, int index, int value, bool useGama) {
+
+    if (value >= 0) {
+        if (transWindowMap.contains(hMonitors[index])) {
+            transWindowMap.value(hMonitors[index])->close();
+            transWindowMap.remove(hMonitors[index]);
+        }
+        if (DDC_CI::setBrightness(hMonitors.at(index), value)) {
+            qDebug() << "使用DDC/CI";
+            return true;
+        } else if (WMI::setBrightness(value)) {
+            qDebug() << "使用WMI";
+            return true;
+        } else if (Ioctl::setBrightness(value)) {
+            qDebug() << "使用Ioctl";
             return true;
         }
+    } else {
+        if (useGama) {
+            CGammaRamp cGammaRamp;
+            if (cGammaRamp.SetBrightness(nullptr, 125)) {
+                qDebug() << "使用CGamaRamp";
+                return true;
+            }
+        }
+        TransparentWindow *transparentWindow;
+        qDebug() << "使用Mask";
+        if (transWindowMap.contains(hMonitors[index])) {
+            transparentWindow = transWindowMap.value(hMonitors[index]);
+        } else {
+            transparentWindow = new TransparentWindow(nullptr, hMonitors[index]);
+            transWindowMap.insert(hMonitors[index], transparentWindow);
+        }
+        if (!transparentWindow->isActiveWindow()) {
+            transparentWindow->show();
+        }
+        transparentWindow->setBrightness(value);
+        return true;
     }
     return false;
 }
+
+

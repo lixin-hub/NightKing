@@ -4,6 +4,7 @@
 #include "highlevelmonitorconfigurationapi.h"
 #include "physicalmonitorenumerationapi.h"
 #include "QList"
+#include "QScreen"
 
 struct MonitorBrightness {
     unsigned long maximumBrightness;
@@ -24,20 +25,20 @@ struct MonitorInfoA {
     DISPLAY_DEVICE displayDevice;
     MonitorBrightness monitorBrightness;
     MonitorContrast monitorContrast;
-
 };
 
 class MyMonitors {
 public:
     MyMonitors();
-
     //获取HMonitor->HANDEL
     static QList<Monitor> getMonitors();
-
+    //和上面一样只是改成Map的形式更方便
+    static QHash<HMONITOR, struct Monitor> getMonitorMap();
     //获取所有HMONITOR
     static QList<HMONITOR> getHMonitors();
-    static QList<MonitorInfoA> getMonitorsInfoA();
-
+    //获取对应显示器的全部信息
+    static MonitorInfoA getMonitorsInfoA(HMONITOR hmonitor);
+    static QMap<QString, QScreen *> getScreenNameMap();
 };
 
 #endif // MYMONITORS_H

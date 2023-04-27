@@ -8,38 +8,58 @@
 #include<QDebug>
 #include <QPushButton>
 #include <qsystemtrayicon.h>
-#include "page/component/popwindow/MessageTitle.h"
 
 SettingWindow::SettingWindow(QWidget *parent) : QWidget(parent), ui(new Ui::SettingWindow) {
     ui->setupUi(this);
+    initMenu();
+}
+//初始化菜单和图标
+void SettingWindow::initMenu() {
     ui->bt_generate->setIcon(QIcon(":/img/shezhi.svg"));
     ui->bt_display_setting->setIcon(QIcon(":/img/xianshiqi.svg"));
     ui->bt_timer->setIcon(QIcon(":/img/timer.svg"));
     ui->bt_key_map->setIcon(QIcon(":/img/kuaijiejian.svg"));
-    ui->bt_update->setIcon(QIcon(":/img/shezhi.svg"));
+    ui->bt_update->setIcon(QIcon(":/img/gengxin.svg"));
+//    setWindowTitle("设置");
     QSystemTrayIcon *icon = new QSystemTrayIcon(this);
     icon->setIcon(QIcon(":/img/shezhi.svg"));
     icon->setContextMenu(new QMenu(this));
-
     // 创建一个 "Quit" 菜单项
     QAction *quitAction = new QAction("Quit", icon->contextMenu());
     quitAction->setIcon(QIcon(":/images/exit.png"));
     quitAction->setToolTip("Quit the App");
     // 将 "Quit" 菜单项添加到菜单中
     icon->contextMenu()->addAction(quitAction);
-    MessageTitle *m ;
     connect(icon, &QSystemTrayIcon::activated, this, [=](QSystemTrayIcon::ActivationReason resaon) mutable {
         if (resaon == QSystemTrayIcon::Trigger) {
-            qDebug()<<"点击托盘图标";
-            if(!m)
-               m=new MessageTitle(this);
-            m->showAsQQ();
+            qDebug() << "点击托盘图标";
         }
     });
     // 将菜单显示在托盘中
     icon->show();
+    connect(ui->bt_generate, &QToolButton::clicked, [=] {
+        this->ui->myTab->setCurrentIndex(0);
+    });
+    connect(ui->bt_display_setting, &QToolButton::clicked, [=] { this->ui->myTab->setCurrentIndex(1); });
+    connect(ui->bt_key_map, &QToolButton::clicked, [=] { this->ui->myTab->setCurrentIndex(2); });
+    connect(ui->bt_timer, &QToolButton::clicked, [=] { this->ui->myTab->setCurrentIndex(3); });
+    connect(ui->bt_update, &QToolButton::clicked, [=] { this->ui->myTab->setCurrentIndex(4); });
 }
 
 SettingWindow::~SettingWindow() {
     delete ui;
+}
+//监听窗口变化
+void SettingWindow::resizeEvent(QResizeEvent *event) {
+    resizeBlock();
+}
+
+/**
+ * 调整tab标签内容以适应窗口变化
+ */
+void SettingWindow::resizeBlock() {
+    ui->genarate_block->resize(ui->tab_genarate->size());
+    ui->genarate_block->move(ui->tab_genarate->pos());
+    ui->display_block->resize(ui->tab_display->size());
+    ui->display_block->move(ui->tab_display->pos());
 }

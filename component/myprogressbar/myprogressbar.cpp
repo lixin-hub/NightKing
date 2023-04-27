@@ -6,7 +6,6 @@ MyProgressBar::MyProgressBar(QWidget *parent) :
     ui(new Ui::MyProgressBar)
 {
     ui->setupUi(this);
-
 }
 
 MyProgressBar::~MyProgressBar()

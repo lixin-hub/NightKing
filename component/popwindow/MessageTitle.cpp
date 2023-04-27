@@ -1,8 +1,8 @@
 #include "MessageTitle.h"
-#include "qDebug"
+#include "QDebug"
 #include "QPushButton"
 #include "adjustlightui.h"
-#include "page/component/myprogressbar/myprogressbar.h"
+#include "component/myprogressbar/myprogressbar.h"
 
 MessageTitle::MessageTitle(QWidget *parent)
         : QWidget{parent} {
@@ -54,7 +54,7 @@ void MessageTitle::myMove() {
 void MessageTitle::myStay() {
     static int timeCount = 0;
     timeCount++;
-    if (timeCount >= 9) {
+    if (timeCount >= 50) {
         timerStay->stop();
         timerClose->start(20);
     }
@@ -87,8 +87,8 @@ void MessageTitle::leaveEvent(QEvent *) {
 }
 
 void MessageTitle::focusOutEvent(QFocusEvent *e) {
-    timerClose->start(20);
-    qDebug()<<"失去焦点";this->myClose();
+//    timerClose->start(20);
+//    qDebug()<<"失去焦点";this->myClose();
 }
 
 

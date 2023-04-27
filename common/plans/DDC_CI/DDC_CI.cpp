@@ -4,7 +4,7 @@
 
 #include "DDC_CI.h"
 #include "common/monitor/mymonitors.h"
-bool DDC_CI::getMonitorBrightness(HMONITOR hMonitor, MonitorBrightness *brightness) {
+bool DDC_CI::getMonitorBrightness(HMONITOR hMonitor, MonitorBrightness &brightness) {
     DWORD minimumBrightness;
     DWORD maximumBrightness;
     DWORD currentBrightness;
@@ -16,11 +16,11 @@ bool DDC_CI::getMonitorBrightness(HMONITOR hMonitor, MonitorBrightness *brightne
             }
         }
     }
-    *brightness = {static_cast<unsigned long>(maximumBrightness), static_cast<unsigned long>(currentBrightness)};
+    brightness = {static_cast<unsigned long>(maximumBrightness), static_cast<unsigned long>(currentBrightness)};
     return true;
 }
 
-[[maybe_unused]] bool DDC_CI::getMonitorContrast(HANDLE hMonitor, MonitorContrast *contrast) {
+[[maybe_unused]] bool DDC_CI::getMonitorContrast(HANDLE hMonitor, MonitorContrast &contrast) {
     DWORD minimumContrast;
     DWORD maximumContrast;
     DWORD currentContrast;
@@ -30,7 +30,7 @@ bool DDC_CI::getMonitorBrightness(HMONITOR hMonitor, MonitorBrightness *brightne
     }
 
 
-    *contrast = {static_cast<unsigned long>(maximumContrast), static_cast<unsigned long>(currentContrast)};
+    contrast = {static_cast<unsigned long>(maximumContrast), static_cast<unsigned long>(currentContrast)};
 
     return true;
 }
