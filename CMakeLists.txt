@@ -18,7 +18,6 @@ set(UI
         )
 set(PROJECT_SOURCES
         main.cpp
-        lib/NightKingSetting.exe
         settingwindow/settingwindow.h
         settingwindow/settingwindow.cpp
         component/MonitorInfo/monitorinfo.h component/MonitorInfo/monitorinfo.cpp component/MonitorInfo/monitorinfo.ui
@@ -28,7 +27,7 @@ set(PROJECT_SOURCES
         genaratepage.h displaypage.h page/dispaly/displaypage.cpp
 
         res.qrc
-        component/popwindow/MessageTitle.h component/popwindow/MessageTitle.cpp
+        component/popwindow/AdjustLightWindow.h component/popwindow/AdjustLightWindow.cpp
         component/popwindow/adjustlightui.h component/popwindow/adjustlightui.cpp
         component/myprogressbar/myprogressbar.h component/myprogressbar/myprogressbar.cpp
         common/plans/Gamma/CGammaRamp.h common/plans/Gamma/CGammaRamp.cpp common/plans/Gamma/gdi32.dll user32.dll lib/ole32.dll lib/wmiprov.dll
@@ -37,7 +36,8 @@ set(PROJECT_SOURCES
         common/plans/Mask/TransparentWindow.h
         common/plans/IOCTL/Ioctl.cpp common/plans/IOCTL/Ioctl.h common/plans/WMI/WMI.cpp common/plans/WMI/WMI.h
         common/Util/EDIDParser/EDIDParser.cpp common/Util/EDIDParser/EDIDParser.h component/DisplayOrder/DisplayOrder.cpp component/DisplayOrder/DisplayOrder.h common/Util/FileUitl/FileUtil.cpp common/Util/FileUitl/FileUtil.h common/Util/JsonUtil/Jsonutil.cpp common/Util/JsonUtil/JsonUtil.h
-        common/plans/DDC_CI/DDC_CI.cpp common/plans/DDC_CI/DDC_CI.h common/monitor/MonitorController.cpp common/monitor/MonitorController.h common/plans/WMI/MyThread.cpp common/plans/WMI/MyThread.h common/plans/WMI/WMI2.cpp)
+        common/plans/DDC_CI/DDC_CI.cpp common/plans/DDC_CI/DDC_CI.h common/monitor/MonitorController.cpp common/monitor/MonitorController.h common/plans/WMI/MyThread.cpp common/plans/WMI/MyThread.h common/plans/WMI/WMI2.cpp WindowService.cpp WindowService.h
+        )
 if (${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(NightKing
             MANUAL_FINALIZATION

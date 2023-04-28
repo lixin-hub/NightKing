@@ -12,7 +12,7 @@
 static QHash<HMONITOR, TransparentWindow *> transWindowMap;
 
 bool MonitorController::getBrightness(HMONITOR hmonitor, MonitorBrightness &monitorBrightness) {
-    MonitorBrightness *brightness = (MonitorBrightness *) malloc(sizeof(MonitorBrightness));
+    auto *brightness = (MonitorBrightness *) malloc(sizeof(MonitorBrightness));
     bool isSuccess = DDC_CI::getMonitorBrightness(hmonitor, *brightness);
     if (isSuccess) {
         monitorBrightness = *brightness;
@@ -22,14 +22,13 @@ bool MonitorController::getBrightness(HMONITOR hmonitor, MonitorBrightness &moni
 }
 
 bool MonitorController::setBrightness(const QList<HMONITOR> &hMonitors, int index, int value, bool useGama) {
-
     if (value >= 0) {
         if (transWindowMap.contains(hMonitors[index])) {
-            transWindowMap.value(hMonitors[index])->close();
-            transWindowMap.remove(hMonitors[index]);
+            transWindowMap.value(hMonitors[index])->hide();
+//            transWindowMap.remove(hMonitors[index]);
         }
         if (DDC_CI::setBrightness(hMonitors.at(index), value)) {
-            qDebug() << "使用DDC/CI";
+            qDebug() << "使用DDC/CI：" << value;
             return true;
         } else if (WMI::setBrightness(value)) {
             qDebug() << "使用WMI";
@@ -50,10 +49,12 @@ bool MonitorController::setBrightness(const QList<HMONITOR> &hMonitors, int inde
         qDebug() << "使用Mask";
         if (transWindowMap.contains(hMonitors[index])) {
             transparentWindow = transWindowMap.value(hMonitors[index]);
+
         } else {
-            transparentWindow = new TransparentWindow(nullptr, hMonitors[index]);
+            transparentWindow = new TransparentWindow(nullptr, hMonitors[index],index);
             transWindowMap.insert(hMonitors[index], transparentWindow);
         }
+
         if (!transparentWindow->isActiveWindow()) {
             transparentWindow->show();
         }

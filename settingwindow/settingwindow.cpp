@@ -20,23 +20,7 @@ void SettingWindow::initMenu() {
     ui->bt_timer->setIcon(QIcon(":/img/timer.svg"));
     ui->bt_key_map->setIcon(QIcon(":/img/kuaijiejian.svg"));
     ui->bt_update->setIcon(QIcon(":/img/gengxin.svg"));
-//    setWindowTitle("设置");
-    QSystemTrayIcon *icon = new QSystemTrayIcon(this);
-    icon->setIcon(QIcon(":/img/shezhi.svg"));
-    icon->setContextMenu(new QMenu(this));
-    // 创建一个 "Quit" 菜单项
-    QAction *quitAction = new QAction("Quit", icon->contextMenu());
-    quitAction->setIcon(QIcon(":/images/exit.png"));
-    quitAction->setToolTip("Quit the App");
-    // 将 "Quit" 菜单项添加到菜单中
-    icon->contextMenu()->addAction(quitAction);
-    connect(icon, &QSystemTrayIcon::activated, this, [=](QSystemTrayIcon::ActivationReason resaon) mutable {
-        if (resaon == QSystemTrayIcon::Trigger) {
-            qDebug() << "点击托盘图标";
-        }
-    });
-    // 将菜单显示在托盘中
-    icon->show();
+    setWindowTitle("设置");
     connect(ui->bt_generate, &QToolButton::clicked, [=] {
         this->ui->myTab->setCurrentIndex(0);
     });

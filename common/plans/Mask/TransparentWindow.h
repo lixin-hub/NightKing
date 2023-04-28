@@ -8,15 +8,16 @@
 class TransparentWindow : public QWidget {
 Q_OBJECT
 
-public:
-    TransparentWindow(QWidget *parent, HMONITOR hm);
 
-    bool checkTopmost();
+
+public:
+    TransparentWindow(QWidget *parent, HMONITOR hm, int index);
+
 
     void setBrightness(int value);
 
 protected:
-    int brightness;
+    int brightness{};
     void paintEvent(QPaintEvent *event) override;
 };
 

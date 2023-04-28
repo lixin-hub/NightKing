@@ -6,52 +6,28 @@
 #include "windows.h"
 #include "QMouseEvent"
 #include "QDebug"
-#include "QApplication"
-#include "QObject"
 #include "QColor"
 #include "QTimer"
 #include "common/monitor/mymonitors.h"
 #include "common/monitor/MonitorController.h"
 
 
-bool TransparentWindow::checkTopmost() {
-    // 获取当前活动窗口句柄
-    HWND hwnd = GetForegroundWindow();
-    qDebug() << hwnd;//0xc0bbc aqy
-//    qDebug() << this->winId();
-
-//    // 获取最上层窗口句柄
-    HWND top_hwnd = GetTopWindow(NULL);
-    qDebug() << top_hwnd;
-//    if (hwnd == top_hwnd)
-//        return true;
-//    else
-    return false;
-}
-
-TransparentWindow::TransparentWindow(QWidget *parent, HMONITOR hm) : QWidget(parent) {
+TransparentWindow::TransparentWindow(QWidget *parent, HMONITOR hm,int index) : QWidget(parent) {
+    setStyleSheet("border:none;margin:0");
     MonitorInfoA monitorInfoA = MyMonitors::getMonitorsInfoA(hm);
     QMap<QString, QScreen *> scm = MyMonitors::getScreenNameMap();
     QString name = QString(monitorInfoA.displayDevice.DeviceName);
     name = name.left(name.lastIndexOf("\\"));
     QScreen *sc = scm.value(name);
-    this->setGeometry(sc->geometry());
+    setGeometry(sc->availableGeometry());
     this->setAttribute(Qt::WA_TranslucentBackground);//设置窗口透明属性
-    MonitorBrightness light;
-    bool isSuccess = MonitorController::getBrightness(hm, light);
-    brightness = FileUtil::getValue("display", name.append("_currentBrightness"),
-                                    isSuccess ? ((int) light.currentBrightness) : 30).toInt();
-    setStyleSheet("background-color: transparent");
     setAttribute(Qt::WA_TransparentForMouseEvents, true);
-    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint | Qt::X11BypassWindowManagerHint);
+    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint |Qt::SubWindow);
     showFullScreen();
-    QTimer *timer = new QTimer(this);
+    auto *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, [this]() {
-        if (!checkTopmost()) {
-            qDebug() << "更新";
-            this->raise();
-        }
-
+        qDebug() << "更新";
+        this->raise();
     });
 //    timer->start(1000);
 }
@@ -59,14 +35,14 @@ TransparentWindow::TransparentWindow(QWidget *parent, HMONITOR hm) : QWidget(par
 void TransparentWindow::paintEvent(QPaintEvent *event) {
     Q_UNUSED(event)
     QPainter painter(this);
-    float b=brightness==0?0:qAbs(brightness)/100.0;
-    qDebug()<<"亮度"<<b;
-//    setWindowOpacity(b);
-    painter.setOpacity(b);
+    double b = brightness == 0 ? 0 : qAbs(brightness) / 100.0;
+    qDebug() << "亮度" << b;
+    painter.setOpacity(b);;
     painter.fillRect(rect(), QColor(qRgba(26, 32, 38, 0)));
 }
-void TransparentWindow::setBrightness(int value){
-    this->brightness=value;
+
+void TransparentWindow::setBrightness(int value) {
+    this->brightness = value;
     this->repaint();
 
 }

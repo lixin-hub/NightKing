@@ -2,6 +2,7 @@
 #define ADJUSTLIGHTUI_H
 
 #include <QWidget>
+#include <QPushButton>
 
 namespace Ui {
     class AdjustLightUi;
@@ -10,10 +11,15 @@ namespace Ui {
 class AdjustLightUi : public QWidget {
 Q_OBJECT
 
+    void init();
+
 public:
+
+    QPushButton *getCloeButton();
+
     explicit AdjustLightUi(QWidget *parent = nullptr);
 
-    ~AdjustLightUi();
+    ~AdjustLightUi() override;
 
     int SetGamma(int bright);
 
