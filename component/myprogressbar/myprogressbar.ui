@@ -143,7 +143,7 @@ background-color: transparent;
           <number>0</number>
          </property>
          <item>
-          <widget class="QSlider" name="horizontalSlider_2">
+          <widget class="QSlider" name="gamaProgress">
            <property name="styleSheet">
             <string notr="true">QSlider{
 border-color: #bcbcbc;
@@ -168,7 +168,7 @@ QSlider::sub-page:horizontal{
 }</string>
            </property>
            <property name="maximum">
-            <number>100</number>
+            <number>255</number>
            </property>
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -176,7 +176,7 @@ QSlider::sub-page:horizontal{
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label_6">
+          <widget class="QLabel" name="gamaValue">
            <property name="minimumSize">
             <size>
              <width>35</width>
@@ -333,6 +333,22 @@ QSlider::sub-page:horizontal{
     <hint type="destinationlabel">
      <x>371</x>
      <y>88</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>gamaProgress</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>gamaValue</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>208</x>
+     <y>79</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>419</x>
+     <y>79</y>
     </hint>
    </hints>
   </connection>

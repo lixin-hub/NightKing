@@ -1,9 +1,16 @@
-/**
- * CGammaRamp目前只能在笔记本显示器生效
- */
 #include <windows.h>
-#include "CGammaRamp.h"
-#include "QDebug"
+#include "cgammaramp.h"
+
+/*
+CGammaRamp class
+
+Encapsulates the Gamma Ramp API and changes the brightness of 
+the entire screen.
+
+Written by Nir Sofer.
+http://www.nirsoft.net
+*/
+
 CGammaRamp::CGammaRamp()
 {
     //Initialize all variables.
@@ -18,31 +25,29 @@ CGammaRamp::~CGammaRamp()
     FreeLibrary();
 }
 
-
 BOOL CGammaRamp::LoadLibrary()
 {
     BOOL bReturn = FALSE;
 
     FreeLibrary();
     //Load the GDI library.
-    hGDI32 = ::LoadLibrary(TEXT("gdi32.dll"));
-    qDebug()<<"加载gdi32库："<<hGDI32;
+    hGDI32 = ::LoadLibrary("gdi32.dll");
     if (hGDI32 != NULL)
     {
         //Get the addresses of GetDeviceGammaRamp and SetDeviceGammaRamp API functions.
-        pGetDeviceGammaRamp =
-            (Type_SetDeviceGammaRamp)GetProcAddress(hGDI32, "GetDeviceGammaRamp");
-
-        pSetDeviceGammaRamp =
-            (Type_SetDeviceGammaRamp)GetProcAddress(hGDI32, "SetDeviceGammaRamp");
+        pGetDeviceGammaRamp = (Type_GetDeviceGammaRamp)GetProcAddress(hGDI32, "GetDeviceGammaRamp");
+        pSetDeviceGammaRamp = (Type_SetDeviceGammaRamp)GetProcAddress(hGDI32, "SetDeviceGammaRamp");
 
         //Return TRUE only if these functions exist.
         if (pGetDeviceGammaRamp == NULL || pSetDeviceGammaRamp == NULL)
+        {
             FreeLibrary();
+        }
         else
+        {
             bReturn = TRUE;
+        }
     }
-
     return bReturn;
 }
 
@@ -57,20 +62,19 @@ void CGammaRamp::FreeLibrary()
     }
 }
 
-
 BOOL CGammaRamp::LoadLibraryIfNeeded()
 {
     BOOL bReturn = FALSE;
-
     if (hGDI32 == NULL)
+    {
         LoadLibrary();
-
+    }
     if (pGetDeviceGammaRamp != NULL && pSetDeviceGammaRamp != NULL)
+    {
         bReturn = TRUE;
-
+    }
     return bReturn;
 }
-
 
 BOOL CGammaRamp::SetDeviceGammaRamp(HDC hDC, LPVOID lpRamp)
 {
@@ -80,9 +84,10 @@ BOOL CGammaRamp::SetDeviceGammaRamp(HDC hDC, LPVOID lpRamp)
         return pSetDeviceGammaRamp(hDC, lpRamp);
     }
     else
+    {
         return FALSE;
+    }
 }
-
 
 BOOL CGammaRamp::GetDeviceGammaRamp(HDC hDC, LPVOID lpRamp)
 {
@@ -92,10 +97,11 @@ BOOL CGammaRamp::GetDeviceGammaRamp(HDC hDC, LPVOID lpRamp)
         return pGetDeviceGammaRamp(hDC, lpRamp);
     }
     else
+    {
         return FALSE;
+    }
 
 }
-
 
 BOOL CGammaRamp::SetBrightness(HDC hDC, WORD wBrightness)
 {
@@ -108,7 +114,7 @@ BOOL CGammaRamp::SetBrightness(HDC hDC, WORD wBrightness)
     above 128 = brighter
     below 128 = darker
 
-    If hDC is NULL, SetBrightness automatically load and release
+    If hDC is NULL, SetBrightness automatically load and release 
     the display device context for you.
 
     */
@@ -129,20 +135,20 @@ BOOL CGammaRamp::SetBrightness(HDC hDC, WORD wBrightness)
             int iArrayValue = iIndex * (wBrightness + 128);
 
             if (iArrayValue > 65535)
+            {
                 iArrayValue = 65535;
-
+            }
             GammaArray[0][iIndex] =
             GammaArray[1][iIndex] =
             GammaArray[2][iIndex] = (WORD)iArrayValue;
-
         }
 
         //Set the GammaArray values into the display device context.
         bReturn = SetDeviceGammaRamp(hGammaDC, GammaArray);
     }
-
     if (hDC == NULL)
+    {
         ReleaseDC(NULL, hGammaDC);
-
+    }
     return bReturn;
 }

@@ -47,3 +47,7 @@ void SettingWindow::resizeBlock() {
     ui->display_block->resize(ui->tab_display->size());
     ui->display_block->move(ui->tab_display->pos());
 }
+
+void SettingWindow::closeEvent(QCloseEvent *event) {
+   deleteLater();
+}

@@ -24,26 +24,38 @@ void AdjustLightUi::init() {
     QList<HMONITOR> screen_list = MyMonitors::getHMonitors();
     for (int i = 0; i < screen_list.count(); i++) {
         auto *p1 = new MyProgressBar(this);
-        qDebug() << "min_brightness:" << FileUtil::getValue("display", "min_brightness", -50).toInt();
         p1->getProgressbar()->setMaximum(FileUtil::getValue("display", "max_brightness", 100).toInt());
         p1->getProgressbar()->setMinimum(FileUtil::getValue("display", "min_brightness", -50).toInt());
+        p1->getProgressbar()->setValue(FileUtil::getValue("display", QString("currentGama").append(i), 122).toInt());
+        MonitorController::setGama(screen_list, i,
+                                   FileUtil::getValue("display", QString("currentGama").append(i), 122).toInt());
         MonitorBrightness light{};
         bool isSuccess = MonitorController::getBrightness(screen_list.at(i), light);
         int curr = FileUtil::getValue("display", QString("currentBrightness").append(i),
                                       (int) light.currentBrightness).toInt();
         if (isSuccess) {
             p1->setValue(curr);
-            MonitorController::setBrightness(screen_list, i, curr, false);
+            MonitorController::setBrightness(screen_list, i, curr);
             qDebug() << "显示器亮度：" << light.currentBrightness;
         } else
             qDebug() << "获取显示器 " << i << " 亮度失败" << light.currentBrightness;
         p1->setName(QString("显示器%1").arg(i + 1));
+        //监听亮度进度条变化
         connect(p1->getProgressbar(), &QSlider::valueChanged, this, [=](int value)mutable {
-            if (MonitorController::setBrightness(screen_list, i, value, false)) {
+            if (MonitorController::setBrightness(screen_list, i, value)) {
                 FileUtil::setValue("display", QString("currentBrightness").append(i), value);
                 qDebug() << "亮度调节成功";
             } else {
                 qDebug() << "亮度调节失败";
+            }
+        });
+        //监听Gama进度条变化
+        connect(p1->getGamaProgressBar(), &QSlider::valueChanged, this, [=](int value) {
+            if (MonitorController::setGama(screen_list, i, value)) {
+                FileUtil::setValue("display", QString("currentGama").append(i), value);
+                qDebug() << "Gama调节成功";
+            } else {
+                qDebug() << "Gama调节失败";
             }
         });
         ui->content->addWidget(p1);

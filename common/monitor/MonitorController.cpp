@@ -21,7 +21,7 @@ bool MonitorController::getBrightness(HMONITOR hmonitor, MonitorBrightness &moni
     return WMI::getBrightness(monitorBrightness);
 }
 
-bool MonitorController::setBrightness(const QList<HMONITOR> &hMonitors, int index, int value, bool useGama) {
+bool MonitorController::setBrightness(const QList<HMONITOR> &hMonitors, int index, int value) {
     if (value >= 0) {
         if (transWindowMap.contains(hMonitors[index])) {
             transWindowMap.value(hMonitors[index])->hide();
@@ -38,20 +38,13 @@ bool MonitorController::setBrightness(const QList<HMONITOR> &hMonitors, int inde
             return true;
         }
     } else {
-        if (useGama) {
-            CGammaRamp cGammaRamp;
-            if (cGammaRamp.SetBrightness(nullptr, 125)) {
-                qDebug() << "使用CGamaRamp";
-                return true;
-            }
-        }
         TransparentWindow *transparentWindow;
         qDebug() << "使用Mask";
         if (transWindowMap.contains(hMonitors[index])) {
             transparentWindow = transWindowMap.value(hMonitors[index]);
 
         } else {
-            transparentWindow = new TransparentWindow(nullptr, hMonitors[index],index);
+            transparentWindow = new TransparentWindow(nullptr, hMonitors[index], index);
             transWindowMap.insert(hMonitors[index], transparentWindow);
         }
 
@@ -59,6 +52,14 @@ bool MonitorController::setBrightness(const QList<HMONITOR> &hMonitors, int inde
             transparentWindow->show();
         }
         transparentWindow->setBrightness(value);
+        return true;
+    }
+    return false;
+}
+bool MonitorController::setGama(QList<HMONITOR> list, int i, int value) {
+    CGammaRamp cGammaRamp;
+    if (cGammaRamp.SetBrightness(nullptr, value)) {
+        qDebug() << "使用CGamaRamp";
         return true;
     }
     return false;

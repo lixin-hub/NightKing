@@ -14,10 +14,13 @@ class MonitorController {
 public:
 
     //设置亮度值
-    static bool setBrightness(const QList<HMONITOR>& hMonitors, int index, int value, bool useGama);
+    static bool setBrightness(const QList<HMONITOR> &hMonitors, int index, int value);
 
     static bool getBrightness(HMONITOR hmonitor, MonitorBrightness &monitorBrightness);
+
     //窗口和窗口遮罩
+    static bool setGama(QList<HMONITOR> list, int i, int value);
+
 };
 
 

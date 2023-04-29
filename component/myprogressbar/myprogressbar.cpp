@@ -25,5 +25,8 @@ this->ui->progressBar->setValue(value);
 QSlider *MyProgressBar::getProgressbar() {
     return ui->progressBar;
 }
+QSlider *MyProgressBar::getGamaProgressBar() {
+    return ui->gamaProgress;
+}
 
 

@@ -15,8 +15,8 @@ public:
     explicit SettingWindow(QWidget *parent = nullptr);
     ~SettingWindow();
     void resizeEvent(QResizeEvent *event);
-
-    void resizeBlock();
+    void closeEvent(QCloseEvent *event) override;
+        void resizeBlock();
 private:
     Ui::SettingWindow *ui;
 

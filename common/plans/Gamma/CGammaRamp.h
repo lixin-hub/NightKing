@@ -1,7 +1,6 @@
 #ifndef GAMMARAMP_H_
 #define GAMMARAMP_H_
 
-
 /*
 CGammaRamp class
 
@@ -11,17 +10,17 @@ the entire screen.
 Written by Nir Sofer.
 http://www.nirsoft.net
 
-
 */
-#include "windows.h"
+
 class CGammaRamp
 {
 protected:
     HMODULE hGDI32;
     HDC hScreenDC;
+    typedef BOOL (WINAPI *Type_GetDeviceGammaRamp)(HDC hDC, LPVOID lpRamp);
     typedef BOOL (WINAPI *Type_SetDeviceGammaRamp)(HDC hDC, LPVOID lpRamp);
 
-    Type_SetDeviceGammaRamp pGetDeviceGammaRamp;
+    Type_GetDeviceGammaRamp pGetDeviceGammaRamp;
     Type_SetDeviceGammaRamp pSetDeviceGammaRamp;
 
 public:
@@ -36,4 +35,4 @@ public:
     BOOL SetBrightness(HDC hDC, WORD wBrightness);
 
 };
-#endif
+#endif//#ifndef GAMMARAMP_H_

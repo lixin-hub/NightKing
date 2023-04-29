@@ -4,20 +4,27 @@
 #include <QProgressBar>
 #include <QWidget>
 #include <QSlider>
+
 namespace Ui {
-class MyProgressBar;
+    class MyProgressBar;
 }
 
-class MyProgressBar : public QWidget
-{
+class MyProgressBar : public QWidget {
 public:
     explicit MyProgressBar(QWidget *parent = nullptr);
+
     ~MyProgressBar() override;
+
     void setName(QString name);
+
     void setValue(int value);
+
     QSlider *getProgressbar();
 
+    QSlider *getGamaProgressBar();
+
 private:
+
     Ui::MyProgressBar *ui;
 };
 

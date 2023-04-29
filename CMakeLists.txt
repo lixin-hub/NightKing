@@ -30,7 +30,7 @@ set(PROJECT_SOURCES
         component/popwindow/AdjustLightWindow.h component/popwindow/AdjustLightWindow.cpp
         component/popwindow/adjustlightui.h component/popwindow/adjustlightui.cpp
         component/myprogressbar/myprogressbar.h component/myprogressbar/myprogressbar.cpp
-        common/plans/Gamma/CGammaRamp.h common/plans/Gamma/CGammaRamp.cpp common/plans/Gamma/gdi32.dll user32.dll lib/ole32.dll lib/wmiprov.dll
+        common/plans/Gamma/CGammaRamp.h common/plans/Gamma/CGammaRamp.cpp common/plans/Gamma/gdi32.dll lib/user32.dll lib/ole32.dll lib/wmiprov.dll
         common/monitor/mymonitors.h common/monitor/mymonitors.cpp
         common/plans/Mask/TransparentWindow.cpp
         common/plans/Mask/TransparentWindow.h
