@@ -21,6 +21,7 @@ void SettingWindow::initMenu() {
     ui->bt_key_map->setIcon(QIcon(":/img/kuaijiejian.svg"));
     ui->bt_update->setIcon(QIcon(":/img/gengxin.svg"));
     setWindowTitle("设置");
+    this->ui->myTab->setCurrentIndex(0);
     connect(ui->bt_generate, &QToolButton::clicked, [=] {
         this->ui->myTab->setCurrentIndex(0);
     });

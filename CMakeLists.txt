@@ -37,6 +37,7 @@ set(PROJECT_SOURCES
         common/plans/IOCTL/Ioctl.cpp common/plans/IOCTL/Ioctl.h common/plans/WMI/WMI.cpp common/plans/WMI/WMI.h
         common/Util/EDIDParser/EDIDParser.cpp common/Util/EDIDParser/EDIDParser.h component/DisplayOrder/DisplayOrder.cpp component/DisplayOrder/DisplayOrder.h common/Util/FileUitl/FileUtil.cpp common/Util/FileUitl/FileUtil.h common/Util/JsonUtil/Jsonutil.cpp common/Util/JsonUtil/JsonUtil.h
         common/plans/DDC_CI/DDC_CI.cpp common/plans/DDC_CI/DDC_CI.h common/monitor/MonitorController.cpp common/monitor/MonitorController.h common/plans/WMI/MyThread.cpp common/plans/WMI/MyThread.h common/plans/WMI/WMI2.cpp WindowService.cpp WindowService.h
+        common/Util/AutoBoot/AutoBoot.h common/Util/Util/TimeUtil.h component/DisplayOrder/dragtarget.cpp component/DisplayOrder/dragtarget.h
         )
 if (${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(NightKing

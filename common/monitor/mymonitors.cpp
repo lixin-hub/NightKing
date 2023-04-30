@@ -115,8 +115,8 @@ QHash<HMONITOR, Monitor> MyMonitors::getMonitorMap() {
 MyMonitors::MyMonitors() = default;
 
 MonitorInfoA MyMonitors::getMonitorsInfoA(HMONITOR hmonitor) {
-    MonitorInfoA monitorInfos;
-    MonitorBrightness monitorBrightness;
+    MonitorInfoA monitorInfos{};
+    MonitorBrightness monitorBrightness{};
     QHash<HMONITOR, Monitor> hMap = getMonitorMap();
     MonitorController::getBrightness(hmonitor, monitorBrightness);
     Monitor monitor = hMap.value(hmonitor);

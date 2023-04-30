@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>243</width>
+    <width>133</width>
     <height>53</height>
    </rect>
   </property>
@@ -107,48 +107,6 @@
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QToolButton" name="up">
-     <property name="minimumSize">
-      <size>
-       <width>30</width>
-       <height>30</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">image: url(:/img/jiantou_xiangshang.svg);
-</string>
-     </property>
-     <property name="text">
-      <string>上</string>
-     </property>
-     <property name="icon">
-      <iconset theme="application-exit">
-       <normaloff>../../pages/dispaly</normaloff>../../pages/dispaly</iconset>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QToolButton" name="down">
-     <property name="minimumSize">
-      <size>
-       <width>30</width>
-       <height>30</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">image: url(:/img/jiantou_xiangxia.svg);
-</string>
-     </property>
-     <property name="text">
-      <string>下</string>
-     </property>
-     <property name="icon">
-      <iconset theme="application-exit">
-       <normaloff>../../pages/dispaly</normaloff>../../pages/dispaly</iconset>
      </property>
     </widget>
    </item>

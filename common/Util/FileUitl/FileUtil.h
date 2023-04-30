@@ -14,8 +14,8 @@ public:
     static QVariant getValue(QString group, QString key, QVariant defaultValue);
     static QString read(QString path);
     static void setValue(QString group, QString key, QVariant value);
-    static QVariant getItem(QString group, QString key, int index, QVariant defaultValue);
-    static void setItem(QString group, QString key, int index, QVariant value);
+    static QVariant getItem(QString group, QString key, int index, const QVariant& defaultValue);
+    static void setItem(QString group, QString key, int index, const QVariant& value);
     };
 
 #endif //NIGHTKINGSETTING_FILEUTIL_H

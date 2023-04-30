@@ -116,7 +116,7 @@ font-size:16px;</string>
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="checkBox_2">
+       <widget class="QCheckBox" name="autoBoot">
         <property name="text">
          <string>启用</string>
         </property>
@@ -237,14 +237,21 @@ font-size:16px;</string>
 font-weight:500;</string>
         </property>
         <property name="text">
-         <string>问题</string>
+         <string>兼容性问题</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QLabel" name="label_2">
+        <property name="styleSheet">
+         <string notr="true">color:rgb(187,187,187);
+font-size:16px;</string>
+        </property>
         <property name="text">
-         <string>开机自启</string>
+         <string>非常感谢您下载本程序，但本程序只支持Windows平台，并且可能会由于驱动，硬件，系统等等原因造成程序不能正常工作，这是必然存在且很正常的。如不能正常使用请反馈给我，我会尝试解决，感谢您的配配合。</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
         </property>
        </widget>
       </item>

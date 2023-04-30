@@ -2,14 +2,18 @@
 // Created by LIXIN on 2023/4/21.
 //
 
+#include <QDateTime>
 #include "MonitorController.h"
 #include "QApplication"
 #include "common/plans/WMI/WMI.h"
 #include "common/plans/DDC_CI/DDC_CI.h"
 #include "common/plans/Gamma/CGammaRamp.h"
 #include "common/plans/IOCTL/Ioctl.h"
+#include "QTimer"
+#include "common/Util/FileUitl/FileUtil.h"
 
 static QHash<HMONITOR, TransparentWindow *> transWindowMap;
+
 
 bool MonitorController::getBrightness(HMONITOR hmonitor, MonitorBrightness &monitorBrightness) {
     auto *brightness = (MonitorBrightness *) malloc(sizeof(MonitorBrightness));
@@ -56,6 +60,7 @@ bool MonitorController::setBrightness(const QList<HMONITOR> &hMonitors, int inde
     }
     return false;
 }
+
 bool MonitorController::setGama(QList<HMONITOR> list, int i, int value) {
     CGammaRamp cGammaRamp;
     if (cGammaRamp.SetBrightness(nullptr, value)) {

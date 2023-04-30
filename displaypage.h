@@ -13,7 +13,7 @@ Q_OBJECT
 public:
     explicit DisplayPage(QWidget *parent = nullptr);
 
-    ~DisplayPage();
+    ~DisplayPage() override;
 
 private:
     Ui::DisplayPage *ui;
@@ -21,6 +21,7 @@ private:
     void initConnect();
 
     void initMonitorInfoList();
+
 };
 
 #endif // DISPLAYPAGE_H

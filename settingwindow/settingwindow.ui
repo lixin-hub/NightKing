@@ -376,7 +376,8 @@ QToolButton:hover{
                <string>  更新</string>
               </property>
               <property name="icon">
-               <iconset theme="document-print"/>
+               <iconset theme="document-print">
+                <normaloff>.</normaloff>.</iconset>
               </property>
               <property name="autoRepeatDelay">
                <number>302</number>
@@ -476,7 +477,7 @@ QTabWidget::pane{
 }</string>
            </property>
            <property name="currentIndex">
-            <number>1</number>
+            <number>0</number>
            </property>
            <property name="documentMode">
             <bool>true</bool>

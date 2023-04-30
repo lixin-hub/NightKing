@@ -15,6 +15,7 @@
 #include "common/Util/JsonUtil/JsonUtil.h"
 #include "QSlider"
 #include "QComboBox"
+#include "component/DisplayOrder/dragtarget.h"
 
 DisplayPage::DisplayPage(QWidget *parent) : QWidget(parent), ui(new Ui::DisplayPage) {
     ui->setupUi(this);
@@ -35,7 +36,20 @@ void DisplayPage::initMonitorInfoList() {
     auto *showOrderLayout = new QVBoxLayout(this);
     isHiddenLayout->setMargin(0);
     isHiddenLayout->setSpacing(10);
-    for (auto hm: MyMonitors::getHMonitors()) {
+    //drag
+    auto target = new QVBoxLayout(this);
+    target->setMargin(0);
+    auto drag = new DragTarget();
+    drag->setAcceptDrops(true);
+    target->addWidget(drag);
+    drag->setLayout(new QVBoxLayout(this));
+    ui->dispaly_order_target->setAcceptDrops(true);
+    ui->dispaly_order_target->setLayout(target);
+    ui->dispaly_order->setAcceptDrops(true);
+    ui->dispaly_order->setLayout(showOrderLayout);
+    //
+    QList<HMONITOR> hms = MyMonitors::getHMonitors();
+    for (auto hm: hms) {
         i++;
         QString title_name = "显示器" + QString::number(i);
         MonitorInfoA monitorInfoA = MyMonitors::getMonitorsInfoA(hm);
@@ -45,11 +59,10 @@ void DisplayPage::initMonitorInfoList() {
         auto *isHidden = new QCheckBox(this);
         isHidden->setChecked(FileUtil::getItem("display", "isHidden", i - 1, false).toBool());
         connect(isHidden, &QCheckBox::stateChanged, this, [=](int state) {
-            MonitorInfoA monitorInfo = monitorInfoA;
             int index = i - 1;
             FileUtil::setItem("display", "isHidden", index, isHidden->isChecked());
         });
-        isHidden->setText(title_name);
+        isHidden->setText(QString("勾选隐藏 ").append(title_name));
         isHiddenLayout->addWidget(isHidden);
         //标记显示器按钮
         connect(ui->mark_display, &QPushButton::clicked, [=] {
@@ -60,12 +73,22 @@ void DisplayPage::initMonitorInfoList() {
             auto *m = new MarkDisplay(nullptr, title_name, sc);
             m->show();
         });
+    }
+
+    for (int value = 0; value < hms.size(); value++) {
+        int index = FileUtil::getItem("display", "displayOrder", value, value).toInt();
+        qDebug() << "index" << index;
         //调整显示器顺序
-        auto *order = new DisplayOrder(ui->hiden_display, title_name);
+        auto *order = new DisplayOrder(ui->dispaly_order, QString("显示器").append(QString::number(index)), index);
+        order->setStyleSheet("border:1px solid color");
+        order->setAcceptDrops(true);
         showOrderLayout->addWidget(order);
     }
+    connect(ui->cleanOrder, &QPushButton::clicked, [=]() mutable {
+        drag->clear();
+    });
+
     ui->hiden_display->setLayout(isHiddenLayout);
-    ui->dispaly_order->setLayout(showOrderLayout);
 
 }
 

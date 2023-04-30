@@ -48,6 +48,7 @@ void FileUtil::save(QString path, QString text) {
 }
 
 QVariant FileUtil::getValue(QString group, QString key, QVariant defaultValue) {
+    settings->setIniCodec("UTF8");
     settings->beginGroup(group);
     QVariant variant = settings->value(key, defaultValue);
     settings->endGroup();
@@ -55,13 +56,14 @@ QVariant FileUtil::getValue(QString group, QString key, QVariant defaultValue) {
 }
 
 void FileUtil::setValue(QString group, QString key, QVariant value) {
+    settings->setIniCodec("UTF8");
     settings->beginGroup(group);
     settings->setValue(key, value);
     settings->endGroup();
     settings->sync();
 }
 
-void FileUtil::setItem(QString group, QString key, int index, QVariant value) {
+void FileUtil::setItem(QString group, QString key, int index, const QVariant& value) {
     settings->beginWriteArray(group);
     settings->setArrayIndex(index);
     settings->setValue(key, value);
@@ -69,7 +71,7 @@ void FileUtil::setItem(QString group, QString key, int index, QVariant value) {
     settings->sync();
 }
 
-QVariant FileUtil::getItem(QString group, QString key, int index, QVariant defaultValue) {
+QVariant FileUtil::getItem(QString group, QString key, int index, const QVariant& defaultValue) {
     settings->beginReadArray(group);
     settings->setArrayIndex(index);
     QVariant v = settings->value(key, defaultValue);
