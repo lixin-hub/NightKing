@@ -17,7 +17,7 @@ public:
     ~DisplayOrder();
 
 
-    DisplayOrder(QWidget *parent, QString name, int index);
+    DisplayOrder(QWidget *parent, const QString& name, int index);
 
 
     void mousePressEvent(QMouseEvent *event) override;

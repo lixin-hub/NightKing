@@ -24,7 +24,7 @@ void AdjustLightUi::init() {
     });
     QList<HMONITOR> screen_list = MyMonitors::getHMonitors();
     for (int i = 0; i < screen_list.count(); i++) {
-        int screenIndex = FileUtil::getItem("display", "displayOrder", i,i).toInt();
+        int screenIndex = FileUtil::getItem("display", "displayOrder", i, i).toInt();
         bool isHidden = FileUtil::getItem("display", "isHidden", screenIndex, false).toBool();
         if (isHidden) {
             MonitorBrightness light{};
@@ -35,19 +35,23 @@ void AdjustLightUi::init() {
         auto *p1 = new MyProgressBar(this);
         p1->getProgressbar()->setMaximum(FileUtil::getValue("display", "max_brightness", 100).toInt());
         p1->getProgressbar()->setMinimum(FileUtil::getValue("display", "min_brightness", -50).toInt());
-        p1->getProgressbar()->setValue(FileUtil::getValue("display", QString("currentGama").append(screenIndex), 122).toInt());
+        p1->getProgressbar()->setValue(
+                FileUtil::getValue("display", QString("currentGama").append(screenIndex), 122).toInt());
         MonitorBrightness light{};
         MonitorController::setGama(screen_list, screenIndex,
-                                   FileUtil::getValue("display", QString("currentGama").append(screenIndex), 122).toInt());
+                                   FileUtil::getValue("display", QString("currentGama").append(screenIndex),
+                                                      122).toInt());
         bool isSuccess = MonitorController::getBrightness(screen_list.at(screenIndex), light);
         int curr = FileUtil::getValue("display", QString("currentBrightness").append(screenIndex),
                                       (int) light.currentBrightness).toInt();
         if (isSuccess) {
-            p1->setValue(curr);
-            MonitorController::setBrightness(screen_list, screenIndex, curr);
+            curr = light.currentBrightness;
             qDebug() << "显示器亮度：" << light.currentBrightness;
-        } else
+        } else {
             qDebug() << "获取显示器 " << screenIndex << " 亮度失败" << light.currentBrightness;
+        }
+        MonitorController::setBrightness(screen_list, screenIndex, curr);
+        p1->setValue(curr);
         p1->setName(QString("显示器%1").arg(screenIndex + 1));
         //监听亮度进度条变化
         connect(p1->getProgressbar(), &QSlider::valueChanged, this, [=](int value)mutable {

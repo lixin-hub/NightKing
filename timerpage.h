@@ -17,6 +17,8 @@ public:
 
 private:
     Ui::TimerPage *ui;
+
+    void initState(int index);
 };
 
 #endif // TIMERPAGE_H

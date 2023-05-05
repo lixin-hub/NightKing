@@ -8,12 +8,13 @@
 #include <QPushButton>
 #include "QScreen"
 #include "QCloseEvent"
+#include "common/Util/Util/TimeUtil.h"
 
-int closeTime=10;//10hz
+int closeTime = 10;//10hz
 
-int startTime=1;//1hz
+int startTime = 1;//1hz
 
-int staySecond=20;//20s
+int staySecond = 20;//20s
 
 AdjustLightWindow::AdjustLightWindow(QWidget *parent) : QWidget{parent} {
     setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint | Qt::SubWindow | Qt::Popup);
@@ -26,6 +27,7 @@ AdjustLightWindow::AdjustLightWindow(QWidget *parent) : QWidget{parent} {
     connect(timerStay, &QTimer::timeout, this, &AdjustLightWindow::myStay);
     timerClose = new QTimer(this);
     connect(timerClose, &QTimer::timeout, this, &AdjustLightWindow::myClose);
+    TimeUtil::startTimeCount();
 }
 
 void AdjustLightWindow::closeEvent(QCloseEvent *event) {
@@ -52,7 +54,7 @@ void AdjustLightWindow::showAsQQ() {
 //平滑显示出来
 
 void AdjustLightWindow::myMove() {
-    beginX-=10;
+    beginX -= 10;
     move(beginX, targetPoint.y());
     if (beginX <= targetPoint.x()) {
         timerShow->stop();
@@ -144,7 +146,7 @@ void AdjustLightWindow::initContextMenu() {
     quitAction->setToolTip("Quit the App");
     // 将 "Quit" 菜单项添加到菜单中
     icon->contextMenu()->addAction(quitAction);
-    connect(quitAction, &QAction::triggered,this,&QWidget::deleteLater);
+    connect(quitAction, &QAction::triggered, this, &QWidget::deleteLater);
     connect(icon, &QSystemTrayIcon::activated, this, [=](QSystemTrayIcon::ActivationReason reason) mutable {
         if (reason == QSystemTrayIcon::Trigger) {
             qDebug() << "点击托盘图标";
@@ -173,7 +175,7 @@ void AdjustLightWindow::initLayout() {
             tran = 1.0;
         });
     }
-    qDebug()<<layout->sizeHint();
+    qDebug() << layout->sizeHint();
     layout->setFixedSize(layout->sizeHint());
     mainLayout->addWidget(layout);
     this->setLayout(mainLayout);

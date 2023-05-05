@@ -42,6 +42,12 @@ bool MonitorController::setBrightness(const QList<HMONITOR> &hMonitors, int inde
             return true;
         }
     } else {
+//        //将亮度调整为负数的时候首先要将屏幕亮度先调整为0，然后再调整为负数
+//        MonitorBrightness monitorBrightness{};
+//        getBrightness(hMonitors[index], monitorBrightness);
+//        if (monitorBrightness.currentBrightness > 0) {
+//            setBrightness(hMonitors, index, 0);
+//        }
         TransparentWindow *transparentWindow;
         qDebug() << "使用Mask";
         if (transWindowMap.contains(hMonitors[index])) {
@@ -68,6 +74,27 @@ bool MonitorController::setGama(QList<HMONITOR> list, int i, int value) {
         return true;
     }
     return false;
+}
+
+void MonitorController::enableDarkMode(QList<HMONITOR> &monitors, int index, int value) {
+//    将亮度调整为负数的时候首先要将屏幕亮度先调整为0，然后再调整为负数
+    MonitorBrightness monitorBrightness{};
+    getBrightness(monitors[index], monitorBrightness);
+    if (monitorBrightness.currentBrightness > 0) {
+        setBrightness(monitors, index, 0);
+    }
+    FileUtil::setValue("display", QString("currentBrightness").append(index), value);
+    MonitorController::setBrightness(monitors, index, value);
+}
+
+void MonitorController::disableDarkMode(QList<HMONITOR> &monitors, int index, int value) {
+    MonitorBrightness monitorBrightness{};
+    getBrightness(monitors[index], monitorBrightness);
+    if (monitorBrightness.currentBrightness > 0) {
+        setBrightness(monitors, index, 0);
+    }
+    FileUtil::setValue("display", QString("currentBrightness").append(index), value);
+    MonitorController::setBrightness(monitors, index, value);
 }
 
 

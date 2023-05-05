@@ -6,7 +6,7 @@
 #include "QDrag"
 #include "QMimeData"
 
-DisplayOrder::DisplayOrder(QWidget *parent, QString name,int index) : QWidget(parent), ui(new Ui::DisplayOrder) {
+DisplayOrder::DisplayOrder(QWidget *parent, const QString& name,int index) : QWidget(parent), ui(new Ui::DisplayOrder) {
     ui->setupUi(this);
     this->name = name;
     this->index=index;

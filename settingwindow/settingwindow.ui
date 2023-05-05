@@ -477,7 +477,7 @@ QTabWidget::pane{
 }</string>
            </property>
            <property name="currentIndex">
-            <number>0</number>
+            <number>2</number>
            </property>
            <property name="documentMode">
             <bool>true</bool>
@@ -580,6 +580,23 @@ QTabWidget::pane{
             <attribute name="title">
              <string>页</string>
             </attribute>
+            <widget class="TimerPage" name="timer_block" native="true">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>-10</y>
+               <width>651</width>
+               <height>700</height>
+              </rect>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>700</height>
+              </size>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_7"/>
+            </widget>
            </widget>
           </widget>
          </item>
@@ -618,6 +635,12 @@ QTabWidget::pane{
    <class>DisplayPage</class>
    <extends>QWidget</extends>
    <header location="global">displaypage.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>TimerPage</class>
+   <extends>QWidget</extends>
+   <header>timerpage.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

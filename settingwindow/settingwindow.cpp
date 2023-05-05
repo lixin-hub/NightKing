@@ -26,8 +26,8 @@ void SettingWindow::initMenu() {
         this->ui->myTab->setCurrentIndex(0);
     });
     connect(ui->bt_display_setting, &QToolButton::clicked, [=] { this->ui->myTab->setCurrentIndex(1); });
-    connect(ui->bt_key_map, &QToolButton::clicked, [=] { this->ui->myTab->setCurrentIndex(2); });
-    connect(ui->bt_timer, &QToolButton::clicked, [=] { this->ui->myTab->setCurrentIndex(3); });
+    connect(ui->bt_timer, &QToolButton::clicked, [=] { this->ui->myTab->setCurrentIndex(2); });
+    connect(ui->bt_key_map, &QToolButton::clicked, [=] { this->ui->myTab->setCurrentIndex(3); });
     connect(ui->bt_update, &QToolButton::clicked, [=] { this->ui->myTab->setCurrentIndex(4); });
 }
 
@@ -47,6 +47,8 @@ void SettingWindow::resizeBlock() {
     ui->genarate_block->move(ui->tab_genarate->pos());
     ui->display_block->resize(ui->tab_display->size());
     ui->display_block->move(ui->tab_display->pos());
+    ui->display_block->resize(ui->tab_timer->size());
+    ui->display_block->move(ui->tab_timer->pos());
 }
 
 void SettingWindow::closeEvent(QCloseEvent *event) {

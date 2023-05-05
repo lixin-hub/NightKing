@@ -20,7 +20,11 @@ public:
 
     //窗口和窗口遮罩
     static bool setGama(QList<HMONITOR> list, int i, int value);
+    //启用夜间模式
 
+    static void disableDarkMode(QList<HMONITOR> &monitors, int index, int value=50);
+    //关闭夜间模式
+    static  void enableDarkMode(QList<HMONITOR> &monitors, int index, int value=-50);
 };
 
 

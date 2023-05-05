@@ -1,7 +1,7 @@
 #include "component/popwindow/AdjustLightWindow.h"
 #include "QApplication"
 #include "QDebug"
-
+#include "QScreen"
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
     AdjustLightWindow w;
