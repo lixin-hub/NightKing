@@ -42,6 +42,7 @@ TimerPage::TimerPage(QWidget *parent) : QWidget(parent), ui(new Ui::TimerPage) {
     connect(ui->endTime, &QTimeEdit::timeChanged, [=](QTime time) {
 
     });
+
     //应用设置
     connect(ui->apply, &QPushButton::clicked, [=]() {
         TimeUtil::closeTimer();
@@ -51,9 +52,10 @@ TimerPage::TimerPage(QWidget *parent) : QWidget(parent), ui(new Ui::TimerPage) {
             //应用到了全部显示器,那么对所有显示器启用或者不启用
             QList<HMONITOR> monitorList = MyMonitors::getHMonitors();
             for (int i = 0; i < monitorList.size(); ++i) {
-                FileUtil::setItem("time", "isEnableDarkModeIndex", i, isEnable);
                 QTime st = ui->startTime->time();
                 QTime et = ui->endTime->time();
+                FileUtil::setItem("time", "isEnableDarkModeIndex", i, isEnable);
+                FileUtil::setItem("time", "darkModeValue", i, ui->darkModeValue->value());
                 FileUtil::setItem("time", "darkModeStartTimeHour", i, st.hour());
                 FileUtil::setItem("time", "darkModeStartTimeMin", i, st.minute());
                 FileUtil::setItem("time", "darkModeEndTimeHour", i, et.hour());
@@ -64,6 +66,7 @@ TimerPage::TimerPage(QWidget *parent) : QWidget(parent), ui(new Ui::TimerPage) {
             QTime st = ui->startTime->time();
             QTime et = ui->endTime->time();
             FileUtil::setItem("time", "isEnableDarkModeIndex", index, isEnable);
+            FileUtil::setItem("time", "darkModeValue", index, ui->darkModeValue->value());
             FileUtil::setItem("time", "darkModeStartTimeHour", index, st.hour());
             FileUtil::setItem("time", "darkModeStartTimeMin", index, st.minute());
             FileUtil::setItem("time", "darkModeEndTimeHour", index, et.hour());
@@ -92,8 +95,12 @@ void TimerPage::initState(int index) {
     ui->enableDarkMode->setChecked(enableIndex);
     bool forAll = FileUtil::getValue("time", "forAllDisplay", true).toBool();
     ui->displaySelector->setEnabled(!forAll);
-
+    int darkValue = FileUtil::getItem("time", "darkModeValue", index, -20).toInt();
+    ui->darkvalue->setText(QString::number(darkValue));
+    ui->darkModeValue->setValue(darkValue);
     ui->forAllDisplay->setChecked(forAll);
+    ui->darkModeValue->setMinimum(FileUtil::getValue("display", "min_brightness", -50).toInt());
+    ui->darkModeValue->setMaximum(FileUtil::getValue("display", "max_brightness", 100).toInt());
 }
 
 TimerPage::~TimerPage() {

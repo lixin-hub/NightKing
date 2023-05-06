@@ -4,6 +4,7 @@
 //
 
 #include <wbemcli.h>
+#include <unistd.h>
 #include "WMI.h"
 #include "QApplication"
 #include "common/monitor/mymonitors.h"
@@ -78,7 +79,7 @@ int Init() {
                               EOAC_NONE, NULL);
     if (FAILED(hr))
         return -1;
-    hr = CoCreateInstance(CLSID_WbemLocator, 0, CLSCTX_INPROC_SERVER, IID_IWbemLocator, (LPVOID *) &wmiLocator);
+    hr = CoCreateInstance(CLSID_WbemLocator, 0, CLSCTX_INPROC_SERVER, IID_IWbemLocator, (LPVOID * ) & wmiLocator);
     if (FAILED(hr))
         return -1;
     hr = wmiLocator->ConnectServer(wmiPath, NULL, NULL, NULL, 0, NULL, NULL, &wmiNamespace);
@@ -119,7 +120,6 @@ int Init() {
     hr = brightnessAdjustmentClassInstant->SpawnInstance(0, &brightnessAdjustmentMethodInstant);
     if (hr != WBEM_S_NO_ERROR)
         return -1;
-
     return 0;
 }
 
@@ -158,14 +158,16 @@ int SetBrightness(int brightness) {
     return 0;
 }
 
-int GetBrightness() {
-    // 每次都需要查询
+int GetBrightness(){
+// 每次都需要查询
     if (brightnessClassEnum) brightnessClassEnum->Release();
     if (brightnessClassObject) brightnessClassObject->Release();
+
 
     HRESULT hr = wmiNamespace->ExecQuery(_bstr_t(L"WQL"), brightnessQuery,
                                          WBEM_FLAG_FORWARD_ONLY | WBEM_FLAG_RETURN_IMMEDIATELY, NULL,
                                          &brightnessClassEnum);
+
     if (hr != WBEM_S_NO_ERROR)
         return -1;
 

@@ -83,8 +83,9 @@ void MonitorController::enableDarkMode(QList<HMONITOR> &monitors, int index, int
     if (monitorBrightness.currentBrightness > 0) {
         setBrightness(monitors, index, 0);
     }
-    FileUtil::setValue("display", QString("currentBrightness").append(index), value);
+    int darkValue = FileUtil::getItem("time", "darkModeValue", index, value).toInt();
     MonitorController::setBrightness(monitors, index, value);
+    FileUtil::setValue("display", QString("currentBrightness").append(index), darkValue);
 }
 
 void MonitorController::disableDarkMode(QList<HMONITOR> &monitors, int index, int value) {
@@ -93,8 +94,9 @@ void MonitorController::disableDarkMode(QList<HMONITOR> &monitors, int index, in
     if (monitorBrightness.currentBrightness > 0) {
         setBrightness(monitors, index, 0);
     }
-    FileUtil::setValue("display", QString("currentBrightness").append(index), value);
-    MonitorController::setBrightness(monitors, index, value);
+    int darkValue = FileUtil::getItem("time", "darkModeValue", index, value).toInt();
+    MonitorController::setBrightness(monitors, index, darkValue);
+    FileUtil::setValue("display", QString("currentBrightness").append(index), darkValue);
 }
 
 

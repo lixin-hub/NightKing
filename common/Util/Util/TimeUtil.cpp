@@ -93,7 +93,7 @@ void TimeUtil::startTimeCount() {
             //当前时间在指定时间之前
             QTime start(startTimeH, startTimeM);
             QTime end(endTimeH, endTimeM);
-            if (currTime > start && currTime < end) {//--start---curr--end,这个时候需要执行一次
+            if ((currTime > start && currTime < end)||(start>end&&currTime>start)) {//--start---curr--end,--end-curr-start-这个时候需要执行一次
                 bool isEnable = FileUtil::getItem("time", "isEnableDarkModeIndex", i, false).toBool();
                 if (isEnable) {
                     MonitorController::enableDarkMode(monitorList, i);

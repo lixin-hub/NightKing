@@ -45,12 +45,13 @@ void AdjustLightUi::init() {
         int curr = FileUtil::getValue("display", QString("currentBrightness").append(screenIndex),
                                       (int) light.currentBrightness).toInt();
         if (isSuccess) {
-            curr = light.currentBrightness;
+            MonitorController::setBrightness(screen_list, screenIndex, light.currentBrightness);
+//            MonitorController::setBrightness(screen_list, screenIndex, curr);
+
             qDebug() << "显示器亮度：" << light.currentBrightness;
         } else {
             qDebug() << "获取显示器 " << screenIndex << " 亮度失败" << light.currentBrightness;
         }
-        MonitorController::setBrightness(screen_list, screenIndex, curr);
         p1->setValue(curr);
         p1->setName(QString("显示器%1").arg(screenIndex + 1));
         //监听亮度进度条变化

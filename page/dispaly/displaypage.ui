@@ -341,13 +341,13 @@ font-size:16px;</string>
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>30</height>
+              <height>24</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>100</width>
-              <height>40</height>
+              <height>35</height>
              </size>
             </property>
             <property name="styleSheet">
