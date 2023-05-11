@@ -85,7 +85,7 @@ void MonitorController::enableDarkMode(QList<HMONITOR> &monitors, int index, int
     }
     int darkValue = FileUtil::getItem("time", "darkModeValue", index, value).toInt();
     MonitorController::setBrightness(monitors, index, value);
-    FileUtil::setValue("display", QString("currentBrightness").append(index), darkValue);
+    FileUtil::setValue("display", QString("currentBrightness").append(QString::number(index)), darkValue);
 }
 
 void MonitorController::disableDarkMode(QList<HMONITOR> &monitors, int index, int value) {
@@ -96,7 +96,21 @@ void MonitorController::disableDarkMode(QList<HMONITOR> &monitors, int index, in
     }
     int darkValue = FileUtil::getItem("time", "darkModeValue", index, value).toInt();
     MonitorController::setBrightness(monitors, index, darkValue);
-    FileUtil::setValue("display", QString("currentBrightness").append(index), darkValue);
+    FileUtil::setValue("display", QString("currentBrightness").append(QString::number(index)), darkValue);
+}
+
+bool MonitorController::addBrightness(const QList<HMONITOR> &monitors, int index, int value) {
+    MonitorBrightness monitorBrightness{};
+    getBrightness(monitors[index], monitorBrightness);
+    int darkValue = FileUtil::getItem("display", "currentBrightness", index,
+                                      (int) monitorBrightness.currentBrightness).toInt() + value;
+    MonitorController::setBrightness(monitors, index, darkValue);
+    FileUtil::setValue("display", QString("currentBrightness").append(QString::number(index)), darkValue);
+    return true;
+}
+
+bool MonitorController::subBrightness(const QList<HMONITOR> &hMonitors, int index, int value) {
+    return addBrightness(hMonitors, index, 0 - value);
 }
 
 

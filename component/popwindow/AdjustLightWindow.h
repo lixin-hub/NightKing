@@ -11,7 +11,6 @@
 
 #include <QBitmap>
 
-#include <QDesktopWidget>
 
 #include <QApplication>
 

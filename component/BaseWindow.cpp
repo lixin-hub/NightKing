@@ -3,12 +3,11 @@
 //
 
 #include "basewindow.h"
-#include <QDesktopWidget>
 #include <QApplication>
 #include <QPainter>
 #include <QFile>
 #include <QPainterPath>
-
+#include "QScreen"
 BaseWindow::BaseWindow(QWidget *parent)
         : QWidget(parent)
 {
@@ -82,7 +81,7 @@ void BaseWindow::onButtonRestoreClicked()
 void BaseWindow::onButtonMaxClicked()
 {
     m_titleBar->saveRestoreInfo(this->pos(), QSize(this->width(), this->height()));
-    QRect desktopRect = QApplication::desktop()->availableGeometry();
+    QRect desktopRect = QApplication::primaryScreen()->availableGeometry();
     QRect FactRect = QRect(desktopRect.x() - 3, desktopRect.y() - 3, desktopRect.width() + 6, desktopRect.height() + 6);
     setGeometry(FactRect);
 }

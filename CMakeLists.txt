@@ -23,8 +23,8 @@ set(PROJECT_SOURCES
         settingwindow/settingwindow.h
         settingwindow/settingwindow.cpp
         page/genarate/genaratepage.cpp
-        page/time/timerpage.cpp timerpage.h
-        genaratepage.h displaypage.h page/dispaly/displaypage.cpp
+        page/time/timerpage.cpp page/time/timerpage.h
+        page/genarate/genaratepage.h page/dispaly/displaypage.h page/dispaly/displaypage.cpp
         component/MonitorInfo/monitorinfo.h component/MonitorInfo/monitorinfo.cpp component/MonitorInfo/monitorinfo.ui
         component/DisplayOrder/displayorder.h component/DisplayOrder/displayorder.cpp component/DisplayOrder/displayorder.ui
         component/MarkDisplay/markdisplay.h component/MarkDisplay/markdisplay.cpp
@@ -43,8 +43,8 @@ set(PROJECT_SOURCES
         common/plans/IOCTL/Ioctl.cpp common/plans/IOCTL/Ioctl.h common/plans/WMI/WMI.cpp common/plans/WMI/WMI.h
         common/Util/EDIDParser/EDIDParser.cpp common/Util/EDIDParser/EDIDParser.h component/DisplayOrder/DisplayOrder.cpp component/DisplayOrder/DisplayOrder.h common/Util/FileUitl/FileUtil.cpp common/Util/FileUitl/FileUtil.h common/Util/JsonUtil/Jsonutil.cpp common/Util/JsonUtil/JsonUtil.h
         common/plans/DDC_CI/DDC_CI.cpp common/plans/DDC_CI/DDC_CI.h common/monitor/MonitorController.cpp common/monitor/MonitorController.h common/plans/WMI/MyThread.cpp common/plans/WMI/MyThread.h common/plans/WMI/WMI2.cpp WindowService.cpp WindowService.h
-        common/Util/AutoBoot/AutoBoot.h common/Util/Util/TimeUtil.h component/DisplayOrder/dragtarget.cpp component/DisplayOrder/dragtarget.h
-        common/Util/Util/TimeUtil.cpp)
+        common/Util/AutoBoot/AutoBoot.h common/Util/TimeUtil/TimeUtil.h component/DisplayOrder/dragtarget.cpp component/DisplayOrder/dragtarget.h
+        common/Util/TimeUtil/TimeUtil.cpp page/sence/sencepage.cpp page/sence/sencepage.h page/sence/sencepage.ui page/keymap/keymappage.cpp page/keymap/keymappage.h page/keymap/keymappage.ui component/keymap/keymap.cpp component/keymap/keymap.h component/keymap/keymap.ui common/Util/KeyMapUtil/MyGlobalShortCut.cpp common/Util/KeyMapUtil/MyGlobalShortCut.h common/Util/KeyMapUtil/MyWinEventFilter.cpp common/Util/KeyMapUtil/MyWinEventFilter.h component/keymap/MyLineEdit.cpp MyLineEdit.h)
 if (${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(NightKing
             MANUAL_FINALIZATION

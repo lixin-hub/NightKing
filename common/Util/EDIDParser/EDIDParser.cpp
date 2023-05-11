@@ -161,7 +161,7 @@ QString EDIDParser::binToDec(QString strBin)   //二进制转十进制
     nLen = strBin.length();
 
     for (i = 0; i < nLen; i++) {
-        if (strBin[nLen - i - 1] == "0")
+        if (strBin[nLen - i - 1] == QChar('0'))
             continue;
         else {
             k = 1;

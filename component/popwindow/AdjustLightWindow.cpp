@@ -8,7 +8,7 @@
 #include <QPushButton>
 #include "QScreen"
 #include "QCloseEvent"
-#include "common/Util/Util/TimeUtil.h"
+#include "common/Util/TimeUtil/TimeUtil.h"
 
 int closeTime = 10;//10hz
 

@@ -1,6 +1,5 @@
 #include "markdisplay.h"
 #include "ui_markdisplay.h"
-#include "QDesktopWidget"
 #include "QApplication"
 #include "QScreen"
 #include "QGuiApplication"

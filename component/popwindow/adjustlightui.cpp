@@ -6,7 +6,7 @@
 #include "common/monitor/MonitorController.h"
 #include "common/Util/FileUitl/FileUtil.h"
 #include "settingwindow/settingwindow.h"
-#include "common/Util/Util/TimeUtil.h"
+#include "common/Util/TimeUtil/TimeUtil.h"
 
 AdjustLightUi::AdjustLightUi(QWidget *parent) : QWidget(parent), ui(new Ui::AdjustLightUi) {
     ui->setupUi(this);
@@ -36,13 +36,13 @@ void AdjustLightUi::init() {
         p1->getProgressbar()->setMaximum(FileUtil::getValue("display", "max_brightness", 100).toInt());
         p1->getProgressbar()->setMinimum(FileUtil::getValue("display", "min_brightness", -50).toInt());
         p1->getProgressbar()->setValue(
-                FileUtil::getValue("display", QString("currentGama").append(screenIndex), 122).toInt());
+                FileUtil::getValue("display", QString("currentGama").append(QString::number(screenIndex)), 122).toInt());
         MonitorBrightness light{};
         MonitorController::setGama(screen_list, screenIndex,
-                                   FileUtil::getValue("display", QString("currentGama").append(screenIndex),
+                                   FileUtil::getValue("display", QString("currentGama").append(QString::number(screenIndex)),
                                                       122).toInt());
         bool isSuccess = MonitorController::getBrightness(screen_list.at(screenIndex), light);
-        int curr = FileUtil::getValue("display", QString("currentBrightness").append(screenIndex),
+        int curr = FileUtil::getValue("display", QString("currentBrightness").append(QString::number(screenIndex)),
                                       (int) light.currentBrightness).toInt();
         if (isSuccess) {
             MonitorController::setBrightness(screen_list, screenIndex, light.currentBrightness);
@@ -57,21 +57,21 @@ void AdjustLightUi::init() {
         //监听亮度进度条变化
         connect(p1->getProgressbar(), &QSlider::valueChanged, this, [=](int value)mutable {
             if (MonitorController::setBrightness(screen_list, screenIndex, value)) {
-                FileUtil::setValue("display", QString("currentBrightness").append(screenIndex), value);
+                FileUtil::setValue("display", QString("currentBrightness").append(QString::number(screenIndex)), value);
                 qDebug() << "亮度调节成功";
             } else {
                 qDebug() << "亮度调节失败";
             }
         });
-        //监听Gama进度条变化
-        connect(p1->getGamaProgressBar(), &QSlider::valueChanged, this, [=](int value) {
-            if (MonitorController::setGama(screen_list, screenIndex, value)) {
-                FileUtil::setValue("display", QString("currentGama").append(screenIndex), value);
-                qDebug() << "Gama调节成功";
-            } else {
-                qDebug() << "Gama调节失败";
-            }
-        });
+//        //监听Gama进度条变化
+//        connect(p1->getGamaProgressBar(), &QSlider::valueChanged, this, [=](int value) {
+//            if (MonitorController::setGama(screen_list, screenIndex, value)) {
+//                FileUtil::setValue("display", QString("currentGama").append(QString::number(screenIndex)), value);
+//                qDebug() << "Gama调节成功";
+//            } else {
+//                qDebug() << "Gama调节失败";
+//            }
+//        });
         ui->content->addWidget(p1);
     }
 }

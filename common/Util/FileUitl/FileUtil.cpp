@@ -48,7 +48,6 @@ void FileUtil::save(QString path, QString text) {
 }
 
 QVariant FileUtil::getValue(QString group, QString key, QVariant defaultValue) {
-    settings->setIniCodec("UTF8");
     settings->beginGroup(group);
     QVariant variant = settings->value(key, defaultValue);
     settings->endGroup();
@@ -56,7 +55,6 @@ QVariant FileUtil::getValue(QString group, QString key, QVariant defaultValue) {
 }
 
 void FileUtil::setValue(QString group, QString key, QVariant value) {
-    settings->setIniCodec("UTF8");
     settings->beginGroup(group);
     settings->setValue(key, value);
     settings->endGroup();

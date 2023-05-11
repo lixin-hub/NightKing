@@ -7,20 +7,23 @@ namespace Ui {
 class SettingWindow;
 }
 
-class SettingWindow : public QWidget
-{
-    Q_OBJECT
+class SettingWindow : public QWidget {
+Q_OBJECT
 
 public:
     explicit SettingWindow(QWidget *parent = nullptr);
-    ~SettingWindow();
-    void resizeEvent(QResizeEvent *event);
+
+    ~SettingWindow() override;
+
     void closeEvent(QCloseEvent *event) override;
-        void resizeBlock();
+
 private:
     Ui::SettingWindow *ui;
 
     void initMenu();
+
+
+    void initLayout(QWidget *widget, QWidget *target);
 };
 
 #endif // SETTINGWINDOW_H

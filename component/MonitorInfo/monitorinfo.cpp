@@ -11,10 +11,10 @@ MonitorInfo::MonitorInfo(QWidget *parent, QString name, const QString adjustMeth
         : QWidget(parent), ui(new Ui::MonitorInfo) {
     ui->setupUi(this);
     ui->title_name->setText(name);
-    ui->display_name->setText(monitorInfoA.displayDevice.DeviceName);
+    ui->display_name->setText(QString((char*)monitorInfoA.displayDevice.DeviceName));
     ui->method->setText(adjustMethod);
     ui->max_brightness->setText(QString::number(monitorInfoA.monitorBrightness.maximumBrightness));
     ui->current_brightness->setText(QString::number(monitorInfoA.monitorBrightness.currentBrightness));
-    ui->enable_mask->setText(QString(false));
+    ui->enable_mask->setText("false");
 }
 
