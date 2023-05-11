@@ -1,5 +1,4 @@
 #include <QMessageBox>
-#include <QProcess>
 #include "component/popwindow/AdjustLightWindow.h"
 #include "QApplication"
 #include "QDebug"

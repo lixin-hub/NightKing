@@ -27,8 +27,8 @@
 #include<QMap>
 
 /**
- * @brief The EDIDParser class
- * 用于解析edid的类
+ *
+ * 用于解析edid的类 可以获取厂家，型号等信息
  */
 
 class EDIDParser

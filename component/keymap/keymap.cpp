@@ -23,17 +23,18 @@ KeyMap::KeyMap(QWidget *parent, QString name, int index) : QWidget(parent), ui(n
     auto shortcut = new MyGlobalShortCut("Ctrl+W", this);
     QObject::connect(shortcut, &MyGlobalShortCut::activated, [=]() {
         MonitorController::addBrightness(MyMonitors::getHMonitors(), index, 5);
-    });  auto subshortcut = new MyGlobalShortCut("Ctrl+Q", this);
+    });
+    auto subshortcut = new MyGlobalShortCut("Ctrl+Q", this);
     QObject::connect(subshortcut, &MyGlobalShortCut::activated, [=]() {
         MonitorController::subBrightness(MyMonitors::getHMonitors(), index, 5);
     });
 
     connect(ui->addKey, &QLineEdit::textChanged, [=](QString keySequence) {
-        qDebug() << keySequence;
-        auto shortcut = new MyGlobalShortCut(keySequence, this);
-        QObject::connect(shortcut, &MyGlobalShortCut::activated, [=]() {
-            qDebug() << "增加亮点";
-        });
+//        qDebug() << keySequence;
+//        auto shortcut = new MyGlobalShortCut(keySequence, this);
+//        QObject::connect(shortcut, &MyGlobalShortCut::activated, [=]() {
+//            qDebug() << "增加亮点";
+//        });
     });
 }
 

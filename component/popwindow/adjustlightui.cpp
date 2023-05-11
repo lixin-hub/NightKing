@@ -35,12 +35,12 @@ void AdjustLightUi::init() {
         auto *p1 = new MyProgressBar(this);
         p1->getProgressbar()->setMaximum(FileUtil::getValue("display", "max_brightness", 100).toInt());
         p1->getProgressbar()->setMinimum(FileUtil::getValue("display", "min_brightness", -50).toInt());
-        p1->getProgressbar()->setValue(
-                FileUtil::getValue("display", QString("currentGama").append(QString::number(screenIndex)), 122).toInt());
+//        p1->getGamaProgressBar()->setValue(
+//                FileUtil::getValue("display", QString("currentGama").append(QString::number(screenIndex)), 122).toInt());
         MonitorBrightness light{};
-        MonitorController::setGama(screen_list, screenIndex,
-                                   FileUtil::getValue("display", QString("currentGama").append(QString::number(screenIndex)),
-                                                      122).toInt());
+//        MonitorController::setGama(screen_list, screenIndex,
+//                                   FileUtil::getValue("display", QString("currentGama").append(QString::number(screenIndex)),
+//                                                      122).toInt());
         bool isSuccess = MonitorController::getBrightness(screen_list.at(screenIndex), light);
         int curr = FileUtil::getValue("display", QString("currentBrightness").append(QString::number(screenIndex)),
                                       (int) light.currentBrightness).toInt();
