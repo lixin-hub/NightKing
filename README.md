@@ -9,10 +9,12 @@ NightKing也能在一定程度上将亮度值调节到100 “以上”，这是�
 但是由于技术问题，它似乎只在单显示器有效，因此我并未对该功能进行应用，有需要的同学可以自行添加调用下代码即可
 
 效果图：
-![](doc/img_8.png)
-#Demo
+![](doc/img_8.png)  
+
+# Demo
 尝试下载这个可运行demo来体验一下（debug版本）
 https://raw.githubusercontent.com/lixin-hub/NightKing/dev/NightKing.exe
+
 # 进度
 
 - 当前状态 **已暂停**
