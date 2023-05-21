@@ -10,6 +10,9 @@ NightKing也能在一定程度上将亮度值调节到100 “以上”，这是�
 
 效果图：
 ![](doc/img_8.png)
+#Demo
+尝试下载这个可运行demo来体验一下（debug版本）
+https://raw.githubusercontent.com/lixin-hub/NightKing/dev/NightKing.exe
 # 进度
 
 - 当前状态 **已暂停**
