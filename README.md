@@ -19,7 +19,6 @@ https://raw.githubusercontent.com/lixin-hub/NightKing/dev/NightKing.exe
 
 - 当前状态 **已暂停**
 - 当前进度 **已经完成主要功能**
-- 暂停原因 **有其他事情做，后面有必要的话可能会继续完善**
 
 # 运行
 
@@ -31,12 +30,12 @@ https://raw.githubusercontent.com/lixin-hub/NightKing/dev/NightKing.exe
 
 # 代码质量
 
-- 质量打分 **约等于0**
-- 原因 **不会C++，不会Qt，完全是霸王硬上弓**
-- 质量这么差为什么还开源 *
+- 质量打分 59
+- 原因 临时学习使用
+- 优点 *
   *对windows平台的亮度调节方案做了一定的代码形式总结，网上查了很久，踩了许多坑，虽然本项目代码质量差，但是依然能为初学者甚至一些刚开始了解该领域的牛牛提供一定的帮助，毕竟核心代码大差不差
   **
-- 代码 **代码的结构，命名，分包等等都是基于我的java开发经验来的，C++也是刚接触，因此可能不是很符合规范，包括对一些库的调用等等，仅供参考
+- 代码 **代码的结构，命名，分包等等都是基于我的java开发经验来的，C++是刚接触，因此可能不是很符合规范，包括对一些库的调用等等，仅供参考
   **
 
 # 项目结构
@@ -99,5 +98,3 @@ https://raw.githubusercontent.com/lixin-hub/NightKing/dev/NightKing.exe
   ![img.png](doc/img_4.png)
 - 多显示器
   ![img.png](doc/img_7.png)
-# 最后
-如果本项目对您有帮助别忘了点个star支持一下，谢谢。
